@@ -1,4 +1,4 @@
-# arduino-AES_CMAC
+# Arduino - AES_CMAC
 AES-CMAC library for Arduino
 
 ## Gettings started
@@ -13,7 +13,7 @@ AES-CMAC library for Arduino
 3. Now you can open any example from the "File/Examples/AES_CMAC" menu.
 
 ### AES_CMAC
-The **AES_CMAC** module is made to encrypt data using the Advanced Encryption Standard algorithm which is based in a symmetric key system. It creates a 16 byte size output. It does not have a decryption method so it works like a hash. 
+The **AES_CMAC** module is made to encrypt data using the Advanced Encryption Standard algorithm which is based in a symmetric key system. It creates a 16 byte size output.
 ```c++
 #include <AES_CMAC.h>
 #include <AES.h>
@@ -64,3 +64,6 @@ Finally, the MAC is printed in a right way, showing the 16 uint8_t. If you used 
 ```plaintext
 MAC: DF A6 67 47 DE 9A E6 30 30 CA 32 61 14 97 C8 27
 ```
+
+### Webgraphy
+[Memo of the AES_CMAC Algorithm](https://tools.ietf.org/html/rfc4493#section-4).
