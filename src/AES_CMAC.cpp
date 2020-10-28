@@ -39,9 +39,13 @@ void AES_CMAC::generateMAC(uint8_t* mac, const uint8_t* key, const uint8_t* data
 		mac[i] = 0;
 	}
 
-	aes128.encryptBlock(X, mac);
+	aes128.encryptBlock(mac, const_Zero);
+	for (int i = 0; i < 16; ++i) {
+		X[i] = mac[i];
+	}
+
 	shiftLeft(X, sizeof(X));
-	if ((mac[0] & 0x80) != 0) {
+	if (mac[0] & 0x80) {
 		xor128(X, X, const_Rb);
 	}
 
@@ -49,7 +53,7 @@ void AES_CMAC::generateMAC(uint8_t* mac, const uint8_t* key, const uint8_t* data
 		Y[i] = X[i];
 	}
 	shiftLeft(Y, sizeof(Y));
-	if ((X[0] & 0x80) != 0) {
+	if (X[0] & 0x80) {
 		xor128(Y, Y, const_Rb);
 	}
 
@@ -75,7 +79,7 @@ void AES_CMAC::generateMAC(uint8_t* mac, const uint8_t* key, const uint8_t* data
 		aes128.encryptBlock(X, Y);
 	}
 
-	xor128(Y, X, mac);
+	xor128(Y, mac, X);
 	aes128.encryptBlock(mac, Y);
 }
 
@@ -95,7 +99,7 @@ void AES_CMAC::shiftLeft(uint8_t* buff, uint8_t buffLen) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void AES_CMAC::xor128(uint8_t* out, const uint8_t* a, const uint8_t* b) {
   for (int i = 0; i < 16; i++) {
-    out[i] = a[i] ^ b[i];
+    *out++ = (*a++) ^ (*b++);
   }
 }
 
